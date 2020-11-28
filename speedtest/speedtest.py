@@ -25,7 +25,7 @@ class Speedtest(commands.Cog):
 
     def _speedtest(self):
         with subprocess.Popen(
-            ["speedtest --format json"],
+            ["speedtest --format json --accept-license --accept-gdpr"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             shell=True,
@@ -47,7 +47,7 @@ class Speedtest(commands.Cog):
             color=await ctx.embed_colour(), title="Running speedtest ... This may take a while! ⏱",
         )
         msg = await ctx.send(embed=em)
-        results = await self.bot.loop.run_in_executor(None, self._speedtest,"--accept-license", "--accept-gdpr")
+        results = await self.bot.loop.run_in_executor(None, self._speedtest)
         if results[1]:
             em.color = discord.Color.dark_red()
             em.title = "Failed to get a speedtest result."
